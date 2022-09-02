@@ -1,0 +1,33 @@
+---
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: S3 Static Website
+
+Parameters:
+  ApplicationName:
+    Type: String
+    Default: 'S3StaticWebsite'
+
+Resources:
+  StaticWebsiteBucket:
+    Type: "AWS::S3::Bucket"
+    Properties:
+      AccessControl: PublicRead
+      WebsiteConfiguration:
+        IndexDocument: index.html
+
+  StaticWebsiteBucketPolicy:
+    Type: "AWS::S3::BucketPolicy"
+    Properties:
+      Bucket: !Ref StaticWebsiteBucket
+      PolicyDocument:
+        Statement:
+          - Action: "s3:GetObject"
+            Effect: Allow
+            Resource: !Sub "arn:aws:s3:::${StaticWebsiteBucket}/*"
+            Principal: '*'
+
+Outputs:
+  APIURI:
+    Description: "URI"
+    Value: !GetAtt StaticWebsiteBucket.WebsiteURL
