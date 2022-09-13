@@ -507,6 +507,7 @@ function saveUint8Array(idx) {
 
 function ChangeFile() {
     var fileElement = document.getElementById("file");
+    App.data = [];
     App.length = fileElement.files.length;
     for(let i = 0; i < fileElement.files.length; i++) {
         const file = fileElement.files[i];
