@@ -1,0 +1,34 @@
+[package]
+name = "files-split-wasm"
+version = "0.1.0"
+description = "File split to files project with wasm-pack"
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+js-sys = "0.3.59"
+serde_json = "1.0"
+serde_derive = "1.0"
+serde = { version = "1.0", features = ["derive"] }
+serde-wasm-bindgen = "0.4.3"
+wasm-bindgen = { version = "0.2.82", features = ["serde-serialize"] }
+
+[dependencies.web-sys]
+version = "0.3.4"
+features = [
+  'Blob',
+  'BlobPropertyBag',
+  'console',
+  'Document',
+  'Element',
+  'Event',
+  'HtmlElement',
+  'MouseEvent',
+  'Node',
+  'Url',
+  'Window',
+]
