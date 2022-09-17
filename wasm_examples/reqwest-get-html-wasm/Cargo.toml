@@ -1,0 +1,33 @@
+[package]
+name = "reqwest-get-html-wasm"
+version = "0.1.0"
+description = "Reqwest get html project with wasm-pack"
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+js-sys = "0.3.59"
+reqwest = { version = "0.11" }
+wasm-bindgen-futures = "0.4.33"
+wasm-bindgen = "0.2.83"
+
+[dependencies.web-sys]
+version = "0.3.4"
+features = [
+  'Blob',
+  'BlobPropertyBag',
+  'console',
+  'Document',
+  'Element',
+  'Event',
+  'HtmlElement',
+  'Location',
+  'MouseEvent',
+  'Node',
+  'Url',
+  'Window',
+]
