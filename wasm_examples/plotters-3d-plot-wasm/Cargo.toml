@@ -1,0 +1,32 @@
+[package]
+name = "plotters-3d-plot-wasm"
+version = "0.1.0"
+description = "Plotters 3d plot project with wasm-pack"
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+js-sys = "0.3.59"
+plotters = "0.3.4"
+wasm-bindgen-futures = "0.4.33"
+wasm-bindgen = "0.2.83"
+
+[dependencies.web-sys]
+version = "0.3.4"
+features = [
+  'Blob',
+  'BlobPropertyBag',
+  'console',
+  'Document',
+  'Element',
+  'Event',
+  'HtmlElement',
+  'MouseEvent',
+  'Node',
+  'Url',
+  'Window',
+]

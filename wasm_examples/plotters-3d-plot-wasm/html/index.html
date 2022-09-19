@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Plotters 3D Plot Sample</title>
+    <style type="text/css">
+h1 {
+  margin: 1em auto;
+  text-align:center;
+}
+div.main {
+  width: 100%;
+  margin: 1em auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+div.field {
+  width: 100%;
+  height: 90vh;
+  text-align:center;
+  overflow-y: scroll;
+}
+    </style>
+    <script type="module">
+    import * as wasmModule from "./plotters_3d_plot_wasm.js";
+    wasmModule.default();
+    </script>
+  </head>
+  <body>
+    <div class="main">
+      <h1>Plotters 3D Plot Sample</h1>
+      <div id="target" class="field">
+      </div>
+    </div>
+  </body>
+</html>
