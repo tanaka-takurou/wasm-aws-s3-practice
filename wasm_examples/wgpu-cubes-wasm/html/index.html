@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Wgpu Cubes Sample</title>
+    <style type="text/css">
+h1 {
+  margin: 1em auto;
+  text-align:center;
+}
+div.main {
+  width: 100%;
+  height: 90vh;
+  margin: 1em auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+div.field {
+  width: 100%;
+  text-align:center;
+}
+div.container {
+  overflow: auto;
+  width: 100%;
+  height: 480px;
+  text-align: center;
+}
+    </style>
+    <script type="module">
+    import * as wasmModule from "./wgpu_cubes_wasm.js";
+    wasmModule.default();
+    </script>
+  </head>
+  <body>
+    <div class="main">
+      <h1>Wgpu Cubes Sample</h1>
+      <div id="wgpu-target" class="container">
+      </div>
+    </div>
+  </body>
+</html>
