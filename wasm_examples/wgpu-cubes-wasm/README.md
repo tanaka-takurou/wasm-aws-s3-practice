@@ -1,6 +1,7 @@
 # wasm-examples
 
 ## Reference
+[Crate wgpu](https://docs.rs/wgpu/latest/wgpu/)
 [learn-wgpu/beginner/tutorial9-models](https://sotrh.github.io/learn-wgpu/beginner/tutorial9-models/)
 
 ## Build

@@ -1,5 +1,8 @@
 # wasm-examples
 
+## Reference
+[Crate reqwest](https://docs.rs/reqwest/latest/reqwest/)
+
 ## Build
 ```
 wasm-pack build --target web

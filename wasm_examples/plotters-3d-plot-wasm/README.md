@@ -1,5 +1,9 @@
 # wasm-examples
 
+## Reference
+[Crate plotters](https://docs.rs/plotters/latest/plotters/index.html)
+[plotters/examples/3d-plot2](https://github.com/plotters-rs/plotters/blob/master/plotters/examples/3d-plot2.rs)
+
 ## Build
 ```
 wasm-pack build --target web
