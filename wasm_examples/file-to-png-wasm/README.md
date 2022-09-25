@@ -2,7 +2,7 @@
 
 ## Reference
 [Crate image](https://docs.rs/image/latest/image/index.html)
-[Crate num-complex](https://docs.rs/num-complex/latest/num-complex/index.html)
+[Crate num-complex](https://docs.rs/num-complex/latest/num_complex/index.html)
 
 ## Build
 ```
