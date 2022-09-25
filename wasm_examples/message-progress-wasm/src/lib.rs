@@ -1,3 +1,4 @@
+use std::convert::TryInto;
 use wasm_bindgen::prelude::*;
 
 fn download_result_file(result_bytes: Vec<u8>, mime_type: &str, file_name: &str) {
@@ -35,6 +36,11 @@ fn bytes_lowering(v: Vec<u8>) -> Vec<u8> {
         buf.push(0u8);
     }
     buf
+}
+
+fn convert_to_array<T, const N: usize>(v: Vec<T>) -> [T; N] {
+    v.try_into()
+        .unwrap_or_else(|v: Vec<T>| panic!("Expected a Vec of length {} but it was {}", N, v.len()))
 }
 
 fn positive_sinusoid(x: f64) -> f64 {
@@ -108,13 +114,13 @@ fn convert_main(v: Vec<u8>, baseline: usize, term: usize, offset: usize) -> Vec<
         buf.extend(remainder.to_vec());
     }
     let mut v_fitted: Vec<u8> = Vec::new();
-    let meta_param = vec![baseline as u8, term as u8, offset as u8];
     let min_frequency = 1f64 / (term + 1) as f64;
     for i in 0..v.len() {
         let rad = (offset as usize + i) as f64 * std::f64::consts::PI * min_frequency + std::f64::consts::FRAC_PI_2;
         v_fitted.push(v[i].wrapping_sub((baseline as u8).wrapping_add((positive_sinusoid(rad) * u8::MAX as f64).trunc() as u8)));
     }
-    buf.extend(meta_param.to_vec());
+    buf.extend(vec![baseline as u8, offset as u8]);
+    buf.extend((term as u64).to_be_bytes().to_vec());
 
     let mut counter = 0;
     let mut tmp_param: u8 = 0;
@@ -153,13 +159,14 @@ pub fn restoration(data: Vec<u8>) {
     let mut buf: Vec<u8> = Vec::new();
     let remainder_len = data[0] as usize;
     let baseline = data[remainder_len + 1];
-    let term = data[remainder_len + 2];
-    let offset = data[remainder_len + 3];
+    let offset = data[remainder_len + 2];
+    let u8_array: [u8; 8] = convert_to_array(data[(remainder_len + 3)..(remainder_len + 11)].to_vec());
+    let term = u64::from_be_bytes(u8_array);
 
     let mut counter = 1;
     let mut tmp_vec: Vec<u8> = Vec::new();
     let mut tmp_param;
-    let mut idx = 4 + remainder_len;
+    let mut idx = 11 + remainder_len;
     loop {
         if idx >= data.len() {
             break;
