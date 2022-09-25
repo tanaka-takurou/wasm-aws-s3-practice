@@ -1,5 +1,9 @@
 # wasm-examples
 
+## Reference
+[Crate md5](https://docs.rs/md5/latest/md5/index.html)
+[Crate sha2](https://docs.rs/sha2/latest/sha2/index.html)
+
 ## Build
 ```
 wasm-pack build --target web

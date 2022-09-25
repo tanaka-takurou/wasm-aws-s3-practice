@@ -91,8 +91,8 @@ pub fn convert(data: Vec<u8>) {
 
                     let dx = (data_length % 1000) as f32 * -0.0001 - 0.72;
                     let dy = match (data_length % 100) < 50 {
-                        true => ((data_length % 100) as f32 * 0.002 - 0.13),
-                        false => ((data_length % 100) as f32 * 0.002 - 0.05),
+                        true => (data_length % 100) as f32 * 0.002 - 0.13,
+                        false => (data_length % 100) as f32 * 0.002 - 0.05,
                     };
                     let c = num_complex::Complex::new(dx, dy);
 
