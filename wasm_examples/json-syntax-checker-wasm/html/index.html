@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Json Syntax Checker</title>
+    <style type="text/css">
+h1 {
+  margin: 1em auto;
+  text-align:center;
+}
+div.main {
+  width: 100%;
+  height: calc(90vh - 5em);
+  margin: 1em auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+div.field {
+  width: 100%;
+  text-align:center;
+}
+div.container {
+  overflow: auto;
+  width: 100%;
+  height: calc(40vh - 5em);
+}
+div.container textarea {
+  display: block;
+  width: 80%;
+  height: calc(40vh - 9em);
+  border: solid;
+  border-radius: 10px;
+  border-width: thin;
+  margin: 0 auto;
+  padding: 1rem;
+  overflow: scroll;
+}
+div.field {
+  width: 100%;
+  text-align:center;
+}
+    </style>
+  </head>
+  <body>
+    <div class="main">
+      <h1>Json Syntax Checker</h1>
+      <div class="container">
+        <textarea id="data" rows="10"></textarea>
+      </div>
+      <div class="field">
+        <span id="message"></span>
+      </div>
+      <div class="field">
+        <label>File</label>
+        <div class="ui input">
+          <input id="file" type="file" name="file" accept=".json" onchange="ChangeFile();">
+        </div>
+      </div>
+      <div class="field">
+        <button id="check" onclick="Check();">SyntaxCheck</button>
+      </div>
+    </div>
+    <script>
+var App = {module: null};
+(async () => {
+  App.module = await import('./json_syntax_checker_wasm.js');
+  App.module.default();
+})();
+
+function toText(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsText(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+    });
+}
+
+function setData() {
+    return function(v) {
+        var fileElement = document.getElementById("data");
+        fileElement.value = v;
+    }
+}
+
+function ChangeFile() {
+    var fileElement = document.getElementById("file");
+    const file = fileElement.files[0];
+    toText(file).then(setData());
+}
+
+function Check() {
+    if (!!App.module.check) {
+        var fileElement = document.getElementById("data");
+        App.module.check(fileElement.value);
+    }
+}
+    </script>
+  </body>
+</html>

@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Request Get Html Sample</title>
+    <title>Request Post Json Sample</title>
     <style type="text/css">
 h1 {
   margin: 1em auto;
@@ -39,13 +39,13 @@ div.container pre {
 }
     </style>
     <script type="module">
-import * as wasmModule from "./reqwest_get_html_wasm.js";
-wasmModule.default();
+    import * as wasmModule from "./reqwest_post_json_wasm.js";
+    wasmModule.default();
     </script>
   </head>
   <body>
     <div class="main">
-      <h1>Request Get Html Sample</h1>
+      <h1>Request Post Json Sample</h1>
       <div class="container">
         <pre id="target"></pre>
       </div>
