@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Choices question about numbers</title>
+    <style type="text/css">
+h1 {
+  margin: 1em auto;
+  text-align:center;
+}
+h2 {
+  margin: 1em auto;
+  text-align:center;
+  overflow-wrap: break-word;
+}
+hr {
+  margin: 2em 1em;
+}
+div#main {
+  width: 100%;
+  height: calc(90vh - 5em);
+  margin: 1em auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+div.field {
+  width: 100%;
+  text-align:center;
+}
+div.container {
+  overflow: auto;
+  width: 100%;
+  height: calc(50vh - 5em);
+}
+div.container textarea {
+  display: block;
+  width: 80%;
+  height: calc(50vh - 9em);
+  border: solid;
+  border-radius: 10px;
+  border-width: thin;
+  margin: 0 auto;
+  padding: 1rem;
+  overflow: scroll;
+}
+span.result_ok {
+  color: #F55;
+}
+span.result_ng {
+  font-weight: bold;
+  color: #55F;
+}
+span.result_choiced {
+  font-size: 0.7rem;
+}
+span.result_score {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+#result_score_container {
+  margin: 1em;
+  text-align: center;
+}
+#result_detail_container {
+  width: 80%;
+  border: solid;
+  border-radius: 10px;
+  border-width: thin;
+  margin: 0 auto;
+  padding: 1rem;
+  overflow-wrap: break-word;
+}
+#question_text {
+  width: 80%;
+  overflow-wrap: break-word;
+}
+#choice_form {
+  width: 60vw;
+  margin: 0 auto;
+}
+#choices_container > div {
+  width: calc(60vw - 10px);
+  text-align: left;
+}
+#choices_container > div > label {
+  overflow-wrap: break-word;
+}
+    </style>
+  </head>
+  <body>
+    <script>
+var App = {module: null, log: [], order: []};
+(async () => {
+    App.module = await import('./choices_question_wasm.js');
+    App.module.default();
+})();
+
+function Next() {
+    saveAnswer();
+    App.module.next(JSON.stringify(App.log), JSON.stringify(App.order));
+}
+
+function Retry() {
+    App.log = [];
+    App.order = [];
+    App.module.default();
+}
+
+function saveAnswer() {
+  const elem = document.getElementById('choice_form');
+  const data = new FormData(elem);
+  var answers = [];
+  for(var pair of data.entries()) {
+    const parsed = parseInt(pair[1], 10);
+    if (!isNaN(parsed)) {
+      answers.push(parsed);
+    }
+    console.log(pair[0] + ', ' + pair[1]);
+  }
+  App.log.push(answers);
+  const parsed = parseInt(elem.dataset.index, 10);
+  if (!isNaN(parsed)) {
+    App.order.push(parsed);
+  }
+}
+    </script>
+  </body>
+</html>
