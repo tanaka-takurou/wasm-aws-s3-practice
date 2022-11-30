@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>PDF extract text</title>
+    <style type="text/css">
+h1 {
+  margin: 1em auto;
+  text-align:center;
+}
+div.main {
+  width: 100%;
+  height: calc(80vh - 5em);
+  margin: 1em auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+div.field {
+  width: 100%;
+  text-align:center;
+}
+    </style>
+  </head>
+  <body>
+    <div class="main">
+      <h1>PDF extract text</h1>
+      <div class="field">
+        <label>File</label>
+        <div class="ui input">
+          <input id="file" type="file" name="file" accept=".pdf" onchange="ChangeFile();">
+        </div>
+      </div>
+      <div class="field">
+        <button id="compress" onclick="Extract();">Extract</button>
+      </div>
+    </div>
+    <script>
+var App = {data: '', module: null};
+(async () => {
+  App.module = await import('./pdf_extract_text_wasm.js');
+  App.module.default();
+})();
+
+function toArrayBuffer(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsArrayBuffer(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+    });
+}
+
+function saveUint8Array() {
+    return function(v) {
+        App.data = new Uint8Array(v);
+    }
+}
+
+function ChangeFile() {
+    var fileElement = document.getElementById("file");
+    const file = fileElement.files[0];
+    toArrayBuffer(file).then(saveUint8Array());
+}
+
+function Extract() {
+    if (App.data.length > 0 &&
+        !!App.module.extract) {
+        App.module.extract(App.data);
+    }
+}
+    </script>
+  </body>
+</html>

@@ -1,0 +1,17 @@
+# wasm-examples
+
+## Reference
+[Crate pdf-extract](https://docs.rs/pdf-extract/latest/pdf_extract/)
+[Crate lopdf](https://docs.rs/lopdf/latest/lopdf/)
+
+## Build
+```
+wasm-pack build --target web
+```
+
+## Upload
+```
+aws s3 cp index.html s3://bucket-name --content-type "text/html"
+aws s3 cp pdf_extract_text_wasm.js s3://bucket-name --content-type "text/javascript"
+aws s3 cp pdf_extract_text_wasm_bg.wasm s3://bucket-name --content-type "application/wasm"
+```
